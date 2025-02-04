@@ -23,9 +23,12 @@ int main ()
     const int WINDOW_HEIGHT = 720;
 
     SDL_Window* window = nullptr;
+    SDL_Renderer* renderer = nullptr;
     SDL_Surface* screen = nullptr;
 
-    if (SDL_Init (SDL_INIT_VIDEO) < 0)
+    SDL_Event event;
+
+    if (SDL_Init (SDL_INIT_EVERYTHING) < 0)
     {
         log_ec ("Failed initializing SDL.", SDL_GetError());
         return 1;
@@ -42,20 +45,48 @@ int main ()
 
     if (window == nullptr)
     {
-        log_ec ("Failed creating window.", SDL_GetError());
+        log_ec ("Failed creating window.", SDL_GetError ());
         return 1;
     }
 
-    screen = SDL_GetWindowSurface (window);
-    
-    SDL_FillRect (
-        screen,
-        nullptr,
-        SDL_MapRGB (screen->format, 255, 255, 255)
+    renderer = SDL_CreateRenderer (
+        window, 
+        -1,
+        SDL_RENDERER_ACCELERATED | 
+        SDL_RENDERER_PRESENTVSYNC |
+        SDL_RENDERER_TARGETTEXTURE
     );
 
-    SDL_UpdateWindowSurface (window);
-    SDL_Delay (5000);
+    if (renderer == nullptr)
+    {
+        log_ec ("Failed creating renderer.", SDL_GetError ());
+        return 1;
+    }
+
+    bool running = true;
+
+    while (running)
+    {
+        if (SDL_PollEvent (&event) > 0)
+        {
+            switch (event.type)
+            {
+                case SDL_QUIT:
+                    running = false;
+                    break;
+            }
+        }
+
+        SDL_SetRenderDrawColor (
+            renderer,
+            0, 0, 0, 1
+        );
+
+        SDL_RenderClear (renderer);
+        SDL_RenderPresent (renderer);
+    }
+    
+    SDL_DestroyRenderer (renderer);
     SDL_DestroyWindow (window);
     SDL_Quit ();
 
