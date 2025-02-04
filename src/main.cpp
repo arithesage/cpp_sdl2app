@@ -1,19 +1,7 @@
-#include <iostream>
 #include <SDL2/SDL.h>
 
-
-void log_e (const char* message)
-{
-    std::cerr << "[ERROR]: " << message << std::endl; 
-}
-
-
-void log_ec (const char* error, const char* cause)
-{
-    log_e (error);
-    std::cerr << "[CAUSE]: " << cause << std::endl;
-    std::cerr << std::endl;
-}
+#include <Logging.hpp>
+#include <TextRenderer.hpp>
 
 
 int main ()
@@ -25,6 +13,8 @@ int main ()
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
     SDL_Surface* screen = nullptr;
+
+    TextRenderer* textRenderer = nullptr;
 
     SDL_Event event;
 
@@ -63,6 +53,8 @@ int main ()
         return 1;
     }
 
+    textRenderer = new TextRenderer ();
+
     bool running = true;
 
     while (running)
@@ -84,6 +76,11 @@ int main ()
 
         SDL_RenderClear (renderer);
         SDL_RenderPresent (renderer);
+    }
+
+    if (textRenderer->IsReady ())
+    {
+        delete textRenderer;
     }
     
     SDL_DestroyRenderer (renderer);
