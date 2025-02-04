@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if ! [ -f "/usr/include/SDL2/SDL.h" ];
+then
+    sudo apt instal -y libsdl2-dev
+fi
+
+
+if ! [ -f "/usr/include/SDL2/SDL_image.h" ];
+then
+    sudo apt instal -y libsdl2-image-dev
+fi
+
+
+if ! [ -f "/usr/include/SDL2/SDL_mixer.h" ];
+then
+    sudo apt instal -y libsdl2-mixer-dev
+fi
+
+
+if ! [ -f "/usr/include/SDL2/SDL_net.h" ];
+then
+    sudo apt instal -y libsdl2-net-dev
+fi
+
+
+if ! [ -f "/usr/include/SDL2/SDL_ttf.h" ];
+then
+    sudo apt install -y libsdl2-ttf-dev
+fi

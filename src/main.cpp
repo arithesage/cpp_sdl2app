@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 
 #include <Logging.hpp>
-#include <TextRenderer.hpp>
+#include <TTF_Module.hpp>
 
 
 int main ()
@@ -12,9 +12,7 @@ int main ()
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
-    SDL_Surface* screen = nullptr;
-
-    TextRenderer* textRenderer = nullptr;
+    SDL_Surface* screen = nullptr;    
 
     SDL_Event event;
 
@@ -53,7 +51,7 @@ int main ()
         return 1;
     }
 
-    textRenderer = new TextRenderer ();
+    TTF_Module::Init ();
 
     bool running = true;
 
@@ -78,9 +76,9 @@ int main ()
         SDL_RenderPresent (renderer);
     }
 
-    if (textRenderer->IsReady ())
+    if (TTF_Module::IsValid ())
     {
-        delete textRenderer;
+        TTF_Module::Destroy ();
     }
     
     SDL_DestroyRenderer (renderer);

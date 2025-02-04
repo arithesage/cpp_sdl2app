@@ -108,13 +108,13 @@ endif
 
 # Builds all C files mirroring their folder tree
 ${OBJ_PATH}/%.o: ${SRC}/%.c
-	$(call MKTREE,$(dir $@))
+	$(shell ${MKTREE} $(dir $@))
 	${C} -c $< -o $@ ${INCLUDE} ${CFLAGS}
 
 
 # Builds all CPP files mirroring their folder tree
 ${OBJ_PATH}/%.o: ${SRC}/%.cpp
-	$(call MKTREE,$(dir $@))
+	$(shell ${MKTREE} $(dir $@))	
 	${CXX} -c $< -o $@ ${INCLUDE} ${CXXFLAGS}
 
 
