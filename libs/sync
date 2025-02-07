@@ -1,0 +1,22 @@
+#!/bin/bash
+
+SCRIPT_PATH=$(realpath $(dirname $0))
+
+
+
+REPO="https://raw.githubusercontent.com/arithesage/cpp_libs/refs/heads/main"
+
+LIBS=("FilesystemHelpers.hpp" \
+      "FilesystemHelpers.cpp" \
+      "VectorHelpers.hpp" \
+      "Types.hpp")
+
+echo "Syncing libs..."
+echo "---------------"
+
+cd "$SCRIPT_PATH"
+
+for lib in "${LIBS[@]}"
+do
+    wget -N "$REPO/$lib"
+done

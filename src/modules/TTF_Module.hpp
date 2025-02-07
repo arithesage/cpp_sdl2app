@@ -3,22 +3,24 @@
 
 #include <SDL2/SDL_ttf.h>
 
+#include <Types.hpp>
+
 
 class TTF_Module
 {
     private:
-        static TTF_Module* instance;
-
         const char* DEFAULT_FONTS_PATH = "res/fonts/";
         const char* DEFAULT_FONT = "NotoMoto-Regular.ttf";
         const int DEFAULT_FONT_SIZE = 16;
 
-        char* fonts = "";
+        static TTF_Module* instance;
+        TTF_Font* defaultFont = nullptr;
 
-        TTF_Font* defaultFont = nullptr;        
+        char* fonts = "";
+        Dictionary<String, TTF_Font*> loadedFonts;
 
         TTF_Module ();
-        ~TTF_Module ();        
+        ~TTF_Module ();
 
     public:
         static void Destroy ();
