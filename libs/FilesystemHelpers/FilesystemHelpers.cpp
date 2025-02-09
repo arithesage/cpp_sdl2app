@@ -1,6 +1,7 @@
 #include <FilesystemHelpers.hpp>
 
 #include <StringHelpers.hpp>
+#include <SystemHelpers.hpp>
 
 
 bool FilesystemHelpers::IsFile (const char * path)
@@ -27,6 +28,17 @@ bool FilesystemHelpers::IsFile (String path)
 
 String FilesystemHelpers::MakePath (std::initializer_list<String> pathParts)
 {
-    String path = StringHelpers::Concat (pathParts, "/");
+    String sep = "";
+
+    if (SysHelpers::InLinux ())
+    {
+        sep = "/";
+    }
+    else
+    {
+        sep = "\\";
+    }
+
+    String path = StringHelpers::Concat (pathParts, sep);
     return path;
 }

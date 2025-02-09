@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-#include <Filesystem.hpp>
+#include <FilesystemHelpers.hpp>
 #include <Logging.hpp>
 
 
@@ -17,8 +17,18 @@ TTF_Module::TTF_Module ()
     }
     else
     {
-        defaultFont = TTF_OpenFont (FSHelper::)
-        //defaultFont = TTF_OpenFont (DEFAULT_FONTS_PATH + DEFAULT_FONT, 16)
+        String defaultFontPath = FSHelpers::MakePath ({
+            DEFAULT_FONTS_PATH,
+            DEFAULT_FONT
+        });
+
+        if (FSHelpers::IsFile (defaultFontPath))
+        {
+            defaultFont = TTF_OpenFont (
+                defaultFontPath.c_str(), 
+                DEFAULT_FONT_SIZE
+            );
+        }
     }
 }
 
