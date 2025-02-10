@@ -1,0 +1,25 @@
+#include <SDLFont.hpp>
+
+
+SDLFont::SDLFont (String path) : Resource (path)
+{
+    if (validFile)
+    {
+        data = TTF_OpenFont (path.c_str (), DEFAULT_SIZE);
+    }
+}
+
+
+void SDLFont::Dispose ()
+{
+    if (IsValid ())
+    {
+        TTF_CloseFont (data);
+    }
+}
+
+
+bool SDLFont::IsValid ()
+{
+    return (data != nullptr);
+}

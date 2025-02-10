@@ -8,8 +8,14 @@ REPO="https://raw.githubusercontent.com/arithesage/cpp_libs/refs/heads/main"
 
 LIBS=("FilesystemHelpers/FilesystemHelpers.hpp" \
       "FilesystemHelpers/FilesystemHelpers.cpp" \
+      "StringHelpers/StringHelpers.hpp" \
+      "StringHelpers/StringHelpers.cpp" \
+      "SystemHelpers/SystemHelpers.hpp" \
+      "SystemHelpers/SystemHelpers.cpp" \
       "VectorHelpers.hpp" \
+      "LangHelpers.hpp" \
       "Types.hpp")
+
 
 echo "Syncing libs..."
 echo "---------------"

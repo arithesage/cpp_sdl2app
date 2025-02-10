@@ -1,0 +1,41 @@
+#!/bin/bash
+
+SCRIPT_DIR=$(realpath $(dirname $0))
+
+
+
+
+ROOT="${SCRIPT_DIR}"
+
+LIBS=("SystemHelpers/SystemHelpers.cpp")
+LIBS+=("StringHelpers/StringHelpers.cpp")
+LIBS+=("FilesystemHelpers/FilesystemHelpers.cpp")
+
+
+OBJS="$SCRIPT_DIR/obj"
+
+
+INCLUDE="-I ${ROOT} "
+
+for lib in "${LIBS[@]}"
+do
+    INCLUDE+="-I $(dirname ${lib}) "
+done
+
+
+BUILD_FLAGS="-std=c++17"
+
+
+if [ -d "$OBJS" ];
+then
+    rm -r "$OBJS"
+fi
+
+mkdir -p "$OBJS"
+
+
+for lib in "${LIBS[@]}"
+do
+    clang++ -c ${lib} -o "${OBJS}/$(basename ${lib} .cpp).o" ${INCLUDE} ${BUILD_FLAGS}
+done
+

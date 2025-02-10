@@ -58,6 +58,11 @@ INCLUDE_PATHS					:= $(sort $(foreach file,${HEADERS},$(dir ${file})))
 INCLUDE							:= $(strip $(foreach inc,${INCLUDE_PATHS},-I ${inc}))
 LIBS							:= $(foreach lib,${LIBS},-l${lib})
 
+EXTRA_LIBS						:= $(shell find libs/* -type f -name "*.hpp")
+EXTRA_INCLUDE_PATHS				:= $(sort $(foreach lib,${EXTRA_LIBS},$(dir ${lib})))
+EXTRA_INCLUDE					:= $(strip $(foreach lib,${EXTRA_INCLUDE_PATHS},-I ${lib}))
+EXTRA_OBJS						:= $(shell find libs/obj/* -type f -name "*.o")
+
 ifeq (${C},)
 	C							:= clang
 endif
@@ -91,31 +96,31 @@ ${OBJ_PATH}:
 # Builds the executable
 ${EXEC}: ${OBJS} ${MAIN_OBJ}
 ifeq (${MAIN_FILE},main.c)
-	${C} ${OBJS} ${MAIN_OBJ} -o ${EXEC} ${LIBS} ${LDFLAGS}
+	${C} ${EXTRA_OBJS} ${OBJS} ${MAIN_OBJ} -o ${EXEC} ${LIBS} ${LDFLAGS}
 else
-	${CXX} ${OBJS} ${MAIN_OBJ} -o ${EXEC} ${LIBS} ${LDFLAGS}
+	${CXX} ${EXTRA_OBJS} ${OBJS} ${MAIN_OBJ} -o ${EXEC} ${LIBS} ${LDFLAGS}
 endif
 
 
 # Builds the main object
 ${MAIN_OBJ}: ${MAIN}
 ifeq (${MAIN_FILE},main.c)
-	${C} -c ${MAIN} -o ${MAIN_OBJ} ${INCLUDE} ${CFLAGS}
+	${C} -c ${MAIN} -o ${MAIN_OBJ} ${EXTRA_INCLUDE} ${INCLUDE} ${CFLAGS}
 else
-	${CXX} -c ${MAIN} -o ${MAIN_OBJ} ${INCLUDE} ${CXXFLAGS}
+	${CXX} -c ${MAIN} -o ${MAIN_OBJ} ${EXTRA_INCLUDE} ${INCLUDE} ${CXXFLAGS}
 endif
 
 
 # Builds all C files mirroring their folder tree
 ${OBJ_PATH}/%.o: ${SRC}/%.c
 	$(shell ${MKTREE} $(dir $@))
-	${C} -c $< -o $@ ${INCLUDE} ${CFLAGS}
+	${C} -c $< -o $@ ${EXTRA_INCLUDE} ${INCLUDE} ${CFLAGS}
 
 
 # Builds all CPP files mirroring their folder tree
 ${OBJ_PATH}/%.o: ${SRC}/%.cpp
 	$(shell ${MKTREE} $(dir $@))	
-	${CXX} -c $< -o $@ ${INCLUDE} ${CXXFLAGS}
+	${CXX} -c $< -o $@ ${EXTRA_INCLUDE} ${INCLUDE} ${CXXFLAGS}
 
 
 # Old recipe for creating custom recipes for compiling all file exept main.
@@ -138,6 +143,10 @@ info:
 	$(info OBJS: ${OBJS})
 	$(info INCLUDED_PATHS: ${INCLUDE})
 	$(info LIBS: ${LIBS})
+	$(info EXTRA_LIBS: ${EXTRA_LIBS})
+	$(info EXTRA_INCLUDE_PATHS: ${EXTRA_INCLUDE_PATHS})
+	$(info EXTRA_INCLUDE: ${EXTRA_INCLUDE})
+	$(info EXTRA_OBJS: ${EXTRA_OBJS})
 
 
 run:

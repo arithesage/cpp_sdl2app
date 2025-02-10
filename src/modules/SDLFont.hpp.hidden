@@ -1,0 +1,22 @@
+#ifndef __RESOURCE_SDL_FONT__
+#define __RESOURCE_SDL_FONT__
+
+#include <SDL2/SDL_ttf.h>
+
+#include <Resource.hpp>
+
+
+class SDLFont : public Resource<TTF_Font>
+{
+    private:
+        const int DEFAULT_SIZE = 16;
+
+        void Dispose () override;
+
+    public:
+        SDLFont (String path);
+        
+        bool IsValid () override;
+};
+
+#endif

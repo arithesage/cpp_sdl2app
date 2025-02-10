@@ -4,6 +4,26 @@
 #include <TTF_Module.hpp>
 
 
+class SDL
+{
+    private:
+        static SDL_Renderer* renderer;
+
+    public:
+        static void Init (SDL_Renderer* renderer)
+        {
+            SDL::renderer = renderer;
+        }
+
+        static SDL_Renderer* Renderer ()
+        {
+            return renderer;
+        }
+};
+
+SDL_Renderer* SDL::renderer = nullptr;
+
+
 int main ()
 {
     const char* WINDOW_TITLE = "Test SDL App";
@@ -50,6 +70,8 @@ int main ()
         log_ec ("Failed creating renderer.", SDL_GetError ());
         return 1;
     }
+
+    SDL::Init (renderer);
 
     TTF_Module::Init ();
 

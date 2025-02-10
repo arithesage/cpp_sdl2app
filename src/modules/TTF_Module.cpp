@@ -77,6 +77,25 @@ bool TTF_Module::IsValid ()
 }
 
 
+
+SDL_Texture* TTF_Module::RenderText (const char* text)
+{
+    TTF_Font* font = defaultFont;
+    SDL_Color color = { 255, 255, 255 };
+
+    SDL_Surface* surface = TTF_RenderText_Solid (defaultFont, text, color);
+
+    if (surface == nullptr)
+    {
+        return nullptr;
+    }
+
+    return nullptr;
+
+    //SDL_Texture* text = SDL_CreateTextureFromSurface ()
+}
+
+
 void TTF_Module::SetFontsPath (const char* path)
 {
     this->fonts = (char*)path;

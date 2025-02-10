@@ -5,6 +5,8 @@
 
 #include <Types.hpp>
 
+struct SDL_Texture;
+
 
 class TTF_Module
 {
@@ -16,7 +18,7 @@ class TTF_Module
         static TTF_Module* instance;
         TTF_Font* defaultFont = nullptr;
 
-        char* fonts = "";
+        const char* fonts = "";
         Dictionary<String, TTF_Font*> loadedFonts;
 
         TTF_Module ();
@@ -28,6 +30,7 @@ class TTF_Module
         static void Init ();
         static bool IsValid ();
         
+        SDL_Texture* RenderText (const char* text);
         void SetFontsPath (const char* path);
 };
 
