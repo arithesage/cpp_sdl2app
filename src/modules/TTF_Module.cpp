@@ -4,6 +4,7 @@
 
 #include <FilesystemHelpers.hpp>
 #include <Logging.hpp>
+#include <SDL.hpp>
 
 
 TTF_Module* TTF_Module::instance = nullptr;
@@ -77,7 +78,6 @@ bool TTF_Module::IsValid ()
 }
 
 
-
 SDL_Texture* TTF_Module::RenderText (const char* text)
 {
     TTF_Font* font = defaultFont;
@@ -90,9 +90,12 @@ SDL_Texture* TTF_Module::RenderText (const char* text)
         return nullptr;
     }
 
-    return nullptr;
+    SDL_Texture* renderedText = SDL_CreateTextureFromSurface (
+        SDL::Renderer (),
+        surface
+    );
 
-    //SDL_Texture* text = SDL_CreateTextureFromSurface ()
+    return renderedText;
 }
 
 

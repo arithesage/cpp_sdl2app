@@ -1,27 +1,9 @@
 #include <SDL2/SDL.h>
 
+#include <SDL.hpp>
+
 #include <Logging.hpp>
 #include <TTF_Module.hpp>
-
-
-class SDL
-{
-    private:
-        static SDL_Renderer* renderer;
-
-    public:
-        static void Init (SDL_Renderer* renderer)
-        {
-            SDL::renderer = renderer;
-        }
-
-        static SDL_Renderer* Renderer ()
-        {
-            return renderer;
-        }
-};
-
-SDL_Renderer* SDL::renderer = nullptr;
 
 
 int main ()
@@ -29,49 +11,13 @@ int main ()
     const char* WINDOW_TITLE = "Test SDL App";
     const int WINDOW_WIDTH = 1280;
     const int WINDOW_HEIGHT = 720;
-
-    SDL_Window* window = nullptr;
-    SDL_Renderer* renderer = nullptr;
-    SDL_Surface* screen = nullptr;    
-
+    
     SDL_Event event;
 
-    if (SDL_Init (SDL_INIT_EVERYTHING) < 0)
+    if (!SDL::Init (WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT))
     {
-        log_ec ("Failed initializing SDL.", SDL_GetError());
         return 1;
     }
-
-    window = SDL_CreateWindow (
-        WINDOW_TITLE,
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        WINDOW_WIDTH,
-        WINDOW_HEIGHT,
-        SDL_WINDOW_SHOWN
-    );
-
-    if (window == nullptr)
-    {
-        log_ec ("Failed creating window.", SDL_GetError ());
-        return 1;
-    }
-
-    renderer = SDL_CreateRenderer (
-        window, 
-        -1,
-        SDL_RENDERER_ACCELERATED | 
-        SDL_RENDERER_PRESENTVSYNC |
-        SDL_RENDERER_TARGETTEXTURE
-    );
-
-    if (renderer == nullptr)
-    {
-        log_ec ("Failed creating renderer.", SDL_GetError ());
-        return 1;
-    }
-
-    SDL::Init (renderer);
 
     TTF_Module::Init ();
 
@@ -89,23 +35,16 @@ int main ()
             }
         }
 
-        SDL_SetRenderDrawColor (
-            renderer,
-            0, 0, 0, 1
-        );
-
-        SDL_RenderClear (renderer);
-        SDL_RenderPresent (renderer);
+        SDL::ClearWindow ();
+        SDL::RefreshWindow ();
     }
 
     if (TTF_Module::IsValid ())
     {
         TTF_Module::Destroy ();
     }
-    
-    SDL_DestroyRenderer (renderer);
-    SDL_DestroyWindow (window);
-    SDL_Quit ();
+
+    SDL::Shutdown ();
 
     return 0;
 }
