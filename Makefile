@@ -59,9 +59,10 @@ INCLUDE							:= $(strip $(foreach inc,${INCLUDE_PATHS},-I ${inc}))
 LIBS							:= $(foreach lib,${LIBS},-l${lib})
 
 EXTRA_LIBS						:= $(shell find libs/* -type f -name "*.hpp")
+EXTRA_SRCS						:= $(shell find libs/* -type f -name "*.cpp")
 EXTRA_INCLUDE_PATHS				:= $(sort $(foreach lib,${EXTRA_LIBS},$(dir ${lib})))
 EXTRA_INCLUDE					:= $(strip $(foreach lib,${EXTRA_INCLUDE_PATHS},-I ${lib}))
-EXTRA_OBJS						:= $(shell find libs/obj/* -type f -name "*.o")
+EXTRA_OBJS						:= $(foreach src,${EXTRA_SRCS},libs/obj/$(notdir $(call SRC2OBJ,${src})))
 
 ifeq (${C},)
 	C							:= clang
