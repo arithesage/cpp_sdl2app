@@ -54,18 +54,19 @@ void TTF_Module::Destroy ()
 
 TTF_Module* TTF_Module::Get ()
 {
-    if (instance == nullptr)
+    if (!IsValid ())
     {
-        Init ();
+        log_e ("TTF_Module has not been initialized yet!");
+        return nullptr;
     }
 
     return instance;
 }
 
 
-void TTF_Module::Init ()
-{
-    if (instance == nullptr)
+void TTF_Module::Init (SDL_Renderer* renderer)
+{    
+    if ((instance == nullptr) && (renderer != nullptr))
     {
         instance = new TTF_Module ();
     }
@@ -91,7 +92,7 @@ SDL_Texture* TTF_Module::RenderText (const char* text)
     }
 
     SDL_Texture* renderedText = SDL_CreateTextureFromSurface (
-        SDL::Renderer (),
+        renderer,
         surface
     );
 
@@ -101,5 +102,5 @@ SDL_Texture* TTF_Module::RenderText (const char* text)
 
 void TTF_Module::SetFontsPath (const char* path)
 {
-    this->fonts = (char*)path;
+    fontsPath = (char*) path;
 }

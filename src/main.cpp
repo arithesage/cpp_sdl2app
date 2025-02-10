@@ -19,7 +19,7 @@ int main ()
         return 1;
     }
 
-    TTF_Module::Init ();
+    TTF_Module::Init (SDL::Renderer ());
 
     bool running = true;
 

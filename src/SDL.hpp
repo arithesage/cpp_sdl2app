@@ -3,6 +3,7 @@
 
 struct SDL_Color;
 struct SDL_Renderer;
+struct SDL_Window;
 
 
 class SDL

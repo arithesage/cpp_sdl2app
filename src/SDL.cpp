@@ -47,6 +47,8 @@ bool SDL::Init (const char* windowTitle,
         log_ec ("Failed creating renderer.", SDL_GetError ());
         return false;
     }
+
+    return true;
 }
 
 

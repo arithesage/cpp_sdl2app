@@ -5,6 +5,8 @@
 
 #include <Types.hpp>
 
+
+struct SDL_Renderer;
 struct SDL_Texture;
 
 
@@ -16,10 +18,13 @@ class TTF_Module
         const int DEFAULT_FONT_SIZE = 16;
 
         static TTF_Module* instance;
+
         TTF_Font* defaultFont = nullptr;
 
-        const char* fonts = "";
+        const char* fontsPath = "";
         Dictionary<String, TTF_Font*> loadedFonts;
+
+        SDL_Renderer* renderer = nullptr;
 
         TTF_Module ();
         ~TTF_Module ();
@@ -27,7 +32,7 @@ class TTF_Module
     public:
         static void Destroy ();
         static TTF_Module* Get ();
-        static void Init ();
+        static void Init (SDL_Renderer* renderer);
         static bool IsValid ();
         
         SDL_Texture* RenderText (const char* text);
