@@ -8,6 +8,7 @@
 
 
 TTF_Module* TTF_Module::instance = nullptr;
+bool TTF_Module::ready = false;
 
 
 TTF_Module::TTF_Module ()
@@ -30,13 +31,15 @@ TTF_Module::TTF_Module ()
                 DEFAULT_FONT_SIZE
             );
         }
+
+        ready = true;
     }
 }
 
 
 TTF_Module::~TTF_Module ()
 {
-    if (TTF_Module::IsValid ())
+    if (TTF_Module::IsReady ())
     {
         TTF_Quit ();
     }
@@ -47,7 +50,7 @@ void TTF_Module::Destroy ()
 {
     if (IsValid ())
     {
-        delete instance;        
+        delete instance;
     }
 }
 
@@ -73,6 +76,12 @@ void TTF_Module::Init (SDL_Renderer* renderer)
 }
 
 
+bool TTF_Module::IsReady ()
+{
+    return ready;
+}
+
+
 bool TTF_Module::IsValid ()
 {
     return (instance != nullptr);
@@ -81,6 +90,12 @@ bool TTF_Module::IsValid ()
 
 SDL_Texture* TTF_Module::RenderText (const char* text)
 {
+    if (!ready)
+    {
+        log_e ("TTF_Module is not ready yet.");
+        return nullptr;
+    }
+
     TTF_Font* font = defaultFont;
     SDL_Color color = { 255, 255, 255 };
 

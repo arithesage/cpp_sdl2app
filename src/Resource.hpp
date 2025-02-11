@@ -5,6 +5,7 @@ class Resource
 {
     protected:
         const char* filePath = "";
+        bool exists = false;
 
         virtual void Dispose ();
 

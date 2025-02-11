@@ -6,12 +6,9 @@
 #include <SDL.hpp>
 
 
-SDLGraphic::SDLGraphic (const char* filePath)
+SDLGraphic::SDLGraphic (const char* filePath) : Resource (filePath)
 {
-    if (FSHelpers::IsFile (filePath))
-    {
-        
-    }
+    
 }
 
 
@@ -21,12 +18,6 @@ SDLGraphic::SDLGraphic (SDL_Surface* surface)
     {
         this->surface = surface;
     }
-}
-
-
-SDLGraphic::~SDLGraphic ()
-{
-    Dispose ();
 }
 
 

@@ -5,6 +5,9 @@ struct SDL_Color;
 struct SDL_Renderer;
 struct SDL_Window;
 
+template <typename R = Resource>
+class ResourcePool;
+
 
 class SDL
 {

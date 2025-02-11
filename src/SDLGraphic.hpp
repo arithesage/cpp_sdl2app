@@ -2,15 +2,16 @@
 #define __SDL_GRAPHIC__
 
 
+#include <Resource.hpp>
+
+
 struct SDL_Surface;
 struct SDL_Texture;
 
 
-class SDLGraphic
+class SDLGraphic : public Resource
 {
-    private:
-        const char* filePath = "";
-        
+    private:        
         SDL_Surface* surface = nullptr;
         SDL_Texture* texture = nullptr;
 
@@ -18,12 +19,10 @@ class SDLGraphic
         SDLGraphic (const char* filePath);
         SDLGraphic (SDL_Surface* surface);
 
-        ~SDLGraphic ();
-
-        void Dispose ();
+        void Dispose () override;
         SDL_Surface* GetSurface ();
         SDL_Texture* GetTexture ();
-        bool IsValid ();
+        bool IsValid () override;
         void Unload ();
 };
 

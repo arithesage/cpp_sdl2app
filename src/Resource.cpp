@@ -5,7 +5,7 @@
 
 Resource::Resource (const char* filePath)
 {
-    
+    exists = FSHelpers::IsFile (filePath);
 }
 
 

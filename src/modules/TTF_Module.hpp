@@ -18,6 +18,7 @@ class TTF_Module
         const int DEFAULT_FONT_SIZE = 16;
 
         static TTF_Module* instance;
+        static bool ready;
 
         TTF_Font* defaultFont = nullptr;
 
@@ -33,6 +34,7 @@ class TTF_Module
         static void Destroy ();
         static TTF_Module* Get ();
         static void Init (SDL_Renderer* renderer);
+        static bool IsReady ();
         static bool IsValid ();
         
         SDL_Texture* RenderText (const char* text);
