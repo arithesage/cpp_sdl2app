@@ -11,44 +11,42 @@
     using Dictionary = std::unordered_map<K,V>;
 #endif
 
-#include <FilesystemHelpers.hpp>
+class Resource;
 
 
-template <typename Resource>
+template <typename R = Resource>
 class ResourcePool
 {
     private:
-        static Dictionary<const char*, Resource> pool;
+        static Dictionary<const char*, R> pool;
 
     public:
-        Resource Get (const char* resourceName);
+        R Get (const char* resourceName);
         void Load (const char* resourceName, const char* filePath);
-        void Store (const char* resourceName, Resource resource);
+        void Store (const char* resourceName, R resource);
 };
 
 
-template <typename Resource>
-Dictionary<const char*, Resource> ResourcePool<Resource>::pool;
+template <typename R>
+Dictionary<const char*, R> ResourcePool<R>::pool;
 
 
-template <typename Resource>
-Resource ResourcePool<Resource>::Get (const char* resourceName)
+template <typename R>
+R ResourcePool<R>::Get (const char* resourceName)
 {
     return;
 }
 
 
-template <typename Resource>
-void ResourcePool<Resource>::Load (const char* resourceName, 
-                                   const char* filePath)
+template <typename R>
+void ResourcePool<R>::Load (const char* resourceName, const char* filePath)
 {
 
 }
 
 
-template <typename Resource>
-void ResourcePool<Resource>::Store (const char* resourceName, 
-                                    Resource resource)
+template <typename R>
+void ResourcePool<R>::Store (const char* resourceName, R resource)
 {
     
 }
