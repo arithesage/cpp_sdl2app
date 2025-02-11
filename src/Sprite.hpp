@@ -4,6 +4,7 @@
 
 class SDLGraphic;
 
+class Collider;
 
 class Sprite
 {
@@ -12,10 +13,13 @@ class Sprite
         int y = 0;
 
         SDLGraphic* graphic = nullptr;
+        Collider* collider = nullptr;
 
     public:
         Sprite (SDLGraphic* graphic);
         ~Sprite ();
+
+        bool CollidesWith (Sprite* sprite);
 
         int X ();
         int Y ();

@@ -2,12 +2,15 @@
 
 #include <SDLGraphic.hpp>
 
+#include <Collider.hpp>
+
 
 Sprite::Sprite (SDLGraphic* graphic)
 {
     if (graphic != nullptr)
     {
         this->graphic = graphic;
+        this->collider = new Collider ();
     }
 }
 
@@ -15,6 +18,17 @@ Sprite::Sprite (SDLGraphic* graphic)
 Sprite::~Sprite ()
 {
     graphic->Unload ();
+}
+
+
+bool Sprite::CollidesWith (Sprite* sprite)
+{
+    if (sprite == nullptr)
+    {
+        return false;
+    }
+
+    return collider->CollidesWith (sprite->collider);
 }
 
 

@@ -1,6 +1,5 @@
 include Project.mk
 
-
 EXEC							:= ${PROJECT_NAME}
 
 ifneq (${WINDIR},)
@@ -75,7 +74,7 @@ endif
 
 
 
-.PHONY: all clean info run
+.PHONY: all clean_libs libs clean info run
 
 
 all: ${OBJ_PATH} ${BUILD_PATH} ${EXEC}
@@ -84,6 +83,10 @@ all: ${OBJ_PATH} ${BUILD_PATH} ${EXEC}
 clean:
 	$(shell ${RMTREE} ${OBJ})
 	$(shell ${RMTREE} ${BUILD})
+
+
+clean_libs:
+	$(shell ${RMTREE} libs/obj)
 
 
 ${BUILD_PATH}:
@@ -127,6 +130,10 @@ ${OBJ_PATH}/%.o: ${SRC}/%.cpp
 # Old recipe for creating custom recipes for compiling all file exept main.
 # Did not work then because 'eval' was missing, but can be useful.
 #$(foreach src,${SRCS},$(eval $(call COMPILE,${src},$(call SRC2OBJ,${src}))))
+
+
+libs:
+	/bin/bash -c libs/build
 
 
 info:

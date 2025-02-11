@@ -12,14 +12,14 @@ LIBS+=("StringHelpers/StringHelpers.cpp")
 LIBS+=("FilesystemHelpers/FilesystemHelpers.cpp")
 
 
-OBJS="$SCRIPT_DIR/obj"
+OBJS="${ROOT}/obj"
 
 
 INCLUDE="-I ${ROOT} "
 
 for lib in "${LIBS[@]}"
 do
-    INCLUDE+="-I $(dirname ${lib}) "
+    INCLUDE+="-I $(dirname ${ROOT}/${lib}) "
 done
 
 
@@ -34,8 +34,33 @@ fi
 mkdir -p "$OBJS"
 
 
+echo "Building libs ..."
+echo "-----------------"
+echo ""
+
 for lib in "${LIBS[@]}"
 do
+    lib_path="${ROOT}/${lib}"
+    lib_dir="$(dirname ${lib_path})"
+    lib="$(basename ${lib})"
+
+    echo "Entering ${lib_dir} ..."
+    echo ""
+
+    cd "${lib_dir}"
     clang++ -c ${lib} -o "${OBJS}/$(basename ${lib} .cpp).o" ${INCLUDE} ${BUILD_FLAGS}
+
+    if ! [ "$?" == "0" ];
+    then
+        echo ""
+        echo "Build failed."
+        echo ""
+        exit 1
+    fi
+
+    cd "${ROOT}"
 done
 
+echo ""
+echo "All libs are built."
+echo ""
