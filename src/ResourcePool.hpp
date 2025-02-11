@@ -1,8 +1,6 @@
 #ifndef __SDL_RESOURCE_POOL__
 #define __SDL_RESOURCE_POOL__
 
-#include <any>
-
 #ifndef __TYPES__
     #include <iostream>
     #include <unordered_map>
@@ -13,26 +11,44 @@
     using Dictionary = std::unordered_map<K,V>;
 #endif
 
-
-enum class Resource
-{
-    Graphic
-};
+#include <FilesystemHelpers.hpp>
 
 
+template <typename Resource>
 class ResourcePool
 {
     private:
-        static Dictionary<Resource, Dictionary<String, std::any>> pool;
+        static Dictionary<const char*, Resource> pool;
 
     public:
-        template <Resource R>
-        void Store (String resourceName, std::any resource);
+        Resource Get (const char* resourceName);
+        void Load (const char* resourceName, const char* filePath);
+        void Store (const char* resourceName, Resource resource);
 };
 
 
-template <Resource R>
-void ResourcePool::Store (String resourceName, std::any resource)
+template <typename Resource>
+Dictionary<const char*, Resource> ResourcePool<Resource>::pool;
+
+
+template <typename Resource>
+Resource ResourcePool<Resource>::Get (const char* resourceName)
+{
+    return;
+}
+
+
+template <typename Resource>
+void ResourcePool<Resource>::Load (const char* resourceName, 
+                                   const char* filePath)
+{
+
+}
+
+
+template <typename Resource>
+void ResourcePool<Resource>::Store (const char* resourceName, 
+                                    Resource resource)
 {
     
 }

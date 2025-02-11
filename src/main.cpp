@@ -4,6 +4,7 @@
 
 #include <Logging.hpp>
 #include <TTF_Module.hpp>
+#include <ResourcePool.hpp>
 
 
 int main ()
@@ -20,6 +21,8 @@ int main ()
     }
 
     TTF_Module::Init (SDL::Renderer ());
+
+    //ResourcePool::Store<Resource::Graphic>
 
     bool running = true;
 
