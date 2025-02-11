@@ -1,5 +1,5 @@
-#ifndef __SDL_RESOURCE_POOL__
-#define __SDL_RESOURCE_POOL__
+#ifndef __POOL__
+#define __POOL__
 
 #ifndef __TYPES__
     #include <iostream>
@@ -15,7 +15,7 @@ class Resource;
 
 
 template <typename R = Resource>
-class ResourcePool
+class Pool
 {
     private:
         static Dictionary<const char*, R> pool;
@@ -28,25 +28,25 @@ class ResourcePool
 
 
 template <typename R>
-Dictionary<const char*, R> ResourcePool<R>::pool;
+Dictionary<const char*, R> Pool<R>::pool;
 
 
 template <typename R>
-R ResourcePool<R>::Get (const char* resourceName)
+R Pool<R>::Get (const char* resourceName)
 {
     return;
 }
 
 
 template <typename R>
-void ResourcePool<R>::Load (const char* resourceName, const char* filePath)
+void Pool<R>::Load (const char* resourceName, const char* filePath)
 {
 
 }
 
 
 template <typename R>
-void ResourcePool<R>::Store (const char* resourceName, R resource)
+void Pool<R>::Store (const char* resourceName, R resource)
 {
     
 }
