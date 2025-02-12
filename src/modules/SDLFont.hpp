@@ -14,9 +14,14 @@ class SDLFont : public Resource
         TTF_Font* font = nullptr;
 
     public:
+        SDLFont ();
         SDLFont (const char* filePath);
         SDLFont (const char* filePath, int size);
+
+        SDLFont& operator=(const SDLFont& other);
         
+        TTF_Font* Font ();
+
         void Dispose () override;
         bool IsValid () override;
 };

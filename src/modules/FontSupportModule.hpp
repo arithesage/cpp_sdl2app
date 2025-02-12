@@ -9,6 +9,11 @@
 struct SDL_Renderer;
 struct SDL_Texture;
 
+template <typename Resource>
+class Pool;
+
+class SDLFont;
+
 
 class FontSupportModule
 {
@@ -18,24 +23,28 @@ class FontSupportModule
         const int DEFAULT_FONT_SIZE = 16;
 
         static FontSupportModule* instance;
+
         static bool ready;
 
         TTF_Font* defaultFont = nullptr;
+        Pool<SDLFont>* fonts = nullptr;
+        SDL_Renderer* renderer = nullptr;
 
         const char* fontsPath = "";
-        Dictionary<String, TTF_Font*> loadedFonts;
-
-        SDL_Renderer* renderer = nullptr;
 
         FontSupportModule ();
         ~FontSupportModule ();
 
     public:
-        static void Destroy ();
-        static FontSupportModule* Get ();
         static void Init (SDL_Renderer* renderer);
+        static void Destroy ();
+        
+        static FontSupportModule* Get ();
         static bool IsReady ();
         static bool IsValid ();
+        
+        bool LoadFont (const char* name, const char* filePath);
+        bool LoadFont (const char* name, const char* filePath, int size);
         
         SDL_Texture* RenderText (const char* text);
         void SetFontsPath (const char* path);

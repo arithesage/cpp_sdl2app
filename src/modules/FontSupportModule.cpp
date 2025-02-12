@@ -4,7 +4,9 @@
 
 #include <FilesystemHelpers.hpp>
 #include <Logging.hpp>
+#include <Pool.hpp>
 #include <SDL.hpp>
+#include <SDLFont.hpp>
 
 
 FontSupportModule* FontSupportModule::instance = nullptr;
@@ -19,20 +21,22 @@ FontSupportModule::FontSupportModule ()
     }
     else
     {
+        fonts = new Pool<SDLFont> ();
+
         String defaultFontPath = FSHelpers::MakePath ({
             DEFAULT_FONTS_PATH,
             DEFAULT_FONT
         });
 
-        if (FSHelpers::IsFile (defaultFontPath))
+        if (!LoadFont ("default", defaultFontPath.c_str ()))
         {
-            defaultFont = TTF_OpenFont (
-                defaultFontPath.c_str(), 
-                DEFAULT_FONT_SIZE
-            );
+            log_e ("Failed loading default font.");
         }
-
-        ready = true;
+        else
+        {
+            defaultFont = fonts->Get("default").Font();
+            ready = true;
+        }
     }
 }
 
@@ -42,6 +46,15 @@ FontSupportModule::~FontSupportModule ()
     if (FontSupportModule::IsReady ())
     {
         TTF_Quit ();
+    }
+}
+
+
+void FontSupportModule::Init (SDL_Renderer* renderer)
+{    
+    if ((instance == nullptr) && (renderer != nullptr))
+    {
+        instance = new FontSupportModule ();
     }
 }
 
@@ -67,15 +80,6 @@ FontSupportModule* FontSupportModule::Get ()
 }
 
 
-void FontSupportModule::Init (SDL_Renderer* renderer)
-{    
-    if ((instance == nullptr) && (renderer != nullptr))
-    {
-        instance = new FontSupportModule ();
-    }
-}
-
-
 bool FontSupportModule::IsReady ()
 {
     return ready;
@@ -86,6 +90,42 @@ bool FontSupportModule::IsValid ()
 {
     return (instance != nullptr);
 }
+
+
+bool FontSupportModule::LoadFont (const char* name, const char* fontFileName)
+{
+    return LoadFont (name, fontFileName, DEFAULT_FONT_SIZE);
+}
+
+
+bool FontSupportModule::LoadFont (const char* name, 
+                                  const char* fontFileName, 
+                                  int size)
+{
+    String fontPath;
+
+    if (fontsPath == "")
+    {
+        fontPath = String (DEFAULT_FONTS_PATH);
+    }
+    else
+    {
+        fontPath = String (fontsPath);
+    }
+
+    String fullFontPath = FSHelpers::MakePath ({fontPath, fontFileName});
+
+    SDLFont font (fullFontPath.c_str(), size);
+
+    if (!font.IsValid ())
+    {
+        return false;
+    }
+
+    fonts->Store (name, font);
+    return true;
+}
+        
 
 
 SDL_Texture* FontSupportModule::RenderText (const char* text)

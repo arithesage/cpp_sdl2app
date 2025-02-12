@@ -22,7 +22,7 @@ class Pool
 
     public:
         R Get (const char* resourceName);
-        void Load (const char* resourceName, const char* filePath);
+        bool Has (const char* resourceName);
         void Store (const char* resourceName, R resource);
 };
 
@@ -34,20 +34,23 @@ Dictionary<const char*, R> Pool<R>::pool;
 template <typename R>
 R Pool<R>::Get (const char* resourceName)
 {
-    return;
+    return pool[resourceName];
 }
 
 
 template <typename R>
-void Pool<R>::Load (const char* resourceName, const char* filePath)
+bool Pool<R>::Has (const char* resourceName)
 {
-
+    return (pool.find (resourceName) != pool.end());
 }
 
 
 template <typename R>
 void Pool<R>::Store (const char* resourceName, R resource)
 {
-    
+    if (resource.IsValid () && !Has (resourceName))
+    {
+        pool[resourceName] = resource;
+    }
 }
 #endif
