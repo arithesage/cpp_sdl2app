@@ -10,10 +10,11 @@ class Resource
         virtual void Dispose ();
 
     public:
+        Resource ();
         Resource (const char* filePath);
         ~Resource ();
 
-        virtual bool IsValid () = 0;
+        virtual bool IsValid ();
 };
 
 #endif

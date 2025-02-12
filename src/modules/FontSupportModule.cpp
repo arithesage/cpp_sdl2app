@@ -1,4 +1,4 @@
-#include <TTF_Module.hpp>
+#include <FontSupportModule.hpp>
 
 #include <SDL2/SDL.h>
 
@@ -7,11 +7,11 @@
 #include <SDL.hpp>
 
 
-TTF_Module* TTF_Module::instance = nullptr;
-bool TTF_Module::ready = false;
+FontSupportModule* FontSupportModule::instance = nullptr;
+bool FontSupportModule::ready = false;
 
 
-TTF_Module::TTF_Module ()
+FontSupportModule::FontSupportModule ()
 {
     if (TTF_Init () < 0)
     {
@@ -37,16 +37,16 @@ TTF_Module::TTF_Module ()
 }
 
 
-TTF_Module::~TTF_Module ()
+FontSupportModule::~FontSupportModule ()
 {
-    if (TTF_Module::IsReady ())
+    if (FontSupportModule::IsReady ())
     {
         TTF_Quit ();
     }
 }
 
 
-void TTF_Module::Destroy ()
+void FontSupportModule::Destroy ()
 {
     if (IsValid ())
     {
@@ -55,11 +55,11 @@ void TTF_Module::Destroy ()
 }
 
 
-TTF_Module* TTF_Module::Get ()
+FontSupportModule* FontSupportModule::Get ()
 {
     if (!IsValid ())
     {
-        log_e ("TTF_Module has not been initialized yet!");
+        log_e ("FontSupport module has not been initialized yet!");
         return nullptr;
     }
 
@@ -67,28 +67,28 @@ TTF_Module* TTF_Module::Get ()
 }
 
 
-void TTF_Module::Init (SDL_Renderer* renderer)
+void FontSupportModule::Init (SDL_Renderer* renderer)
 {    
     if ((instance == nullptr) && (renderer != nullptr))
     {
-        instance = new TTF_Module ();
+        instance = new FontSupportModule ();
     }
 }
 
 
-bool TTF_Module::IsReady ()
+bool FontSupportModule::IsReady ()
 {
     return ready;
 }
 
 
-bool TTF_Module::IsValid ()
+bool FontSupportModule::IsValid ()
 {
     return (instance != nullptr);
 }
 
 
-SDL_Texture* TTF_Module::RenderText (const char* text)
+SDL_Texture* FontSupportModule::RenderText (const char* text)
 {
     if (!ready)
     {
@@ -115,7 +115,7 @@ SDL_Texture* TTF_Module::RenderText (const char* text)
 }
 
 
-void TTF_Module::SetFontsPath (const char* path)
+void FontSupportModule::SetFontsPath (const char* path)
 {
     fontsPath = (char*) path;
 }

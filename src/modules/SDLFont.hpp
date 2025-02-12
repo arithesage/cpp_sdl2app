@@ -6,16 +6,18 @@
 #include <Resource.hpp>
 
 
-class SDLFont : public Resource<TTF_Font>
+class SDLFont : public Resource
 {
     private:
         const int DEFAULT_SIZE = 16;
 
-        void Dispose () override;
+        TTF_Font* font = nullptr;
 
     public:
-        SDLFont (String path);
+        SDLFont (const char* filePath);
+        SDLFont (const char* filePath, int size);
         
+        void Dispose () override;
         bool IsValid () override;
 };
 

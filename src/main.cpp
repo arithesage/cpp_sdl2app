@@ -2,9 +2,9 @@
 
 #include <SDL.hpp>
 
-#include <Logging.hpp>
-#include <TTF_Module.hpp>
+#include <FontSupportModule.hpp>
 #include <Resources.hpp>
+#include <Logging.hpp>
 
 
 int main ()
@@ -20,9 +20,7 @@ int main ()
         return 1;
     }
 
-    TTF_Module::Init (SDL::Renderer ());
-
-    //Resources::Graphics()
+    FontSupportModule::Init (SDL::Renderer ());
 
     bool running = true;
 
@@ -42,9 +40,9 @@ int main ()
         SDL::RefreshWindow ();
     }
 
-    if (TTF_Module::IsValid ())
+    if (FontSupportModule::IsValid ())
     {
-        TTF_Module::Destroy ();
+        FontSupportModule::Destroy ();
     }
 
     SDL::Shutdown ();

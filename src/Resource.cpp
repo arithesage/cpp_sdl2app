@@ -3,6 +3,12 @@
 #include <FilesystemHelpers.hpp>
 
 
+Resource::Resource ()
+{
+    exists = true;
+}
+
+
 Resource::Resource (const char* filePath)
 {
     exists = FSHelpers::IsFile (filePath);
@@ -21,4 +27,8 @@ Resource::~Resource ()
 void Resource::Dispose () {}
 
 
+bool Resource::IsValid () 
+{
+    return true;
+}
 

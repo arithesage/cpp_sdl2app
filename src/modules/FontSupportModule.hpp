@@ -1,5 +1,5 @@
-#ifndef __SDL_TTF_MODULE__
-#define __SDL_TTF_MODULE__
+#ifndef __SDL_FONT_SUPPORT_MODULE__
+#define __SDL_FONT_SUPPORT_MODULE__
 
 #include <SDL2/SDL_ttf.h>
 
@@ -10,14 +10,14 @@ struct SDL_Renderer;
 struct SDL_Texture;
 
 
-class TTF_Module
+class FontSupportModule
 {
     private:
         const char* DEFAULT_FONTS_PATH = "res/fonts/";
         const char* DEFAULT_FONT = "NotoMoto-Regular.ttf";
         const int DEFAULT_FONT_SIZE = 16;
 
-        static TTF_Module* instance;
+        static FontSupportModule* instance;
         static bool ready;
 
         TTF_Font* defaultFont = nullptr;
@@ -27,12 +27,12 @@ class TTF_Module
 
         SDL_Renderer* renderer = nullptr;
 
-        TTF_Module ();
-        ~TTF_Module ();
+        FontSupportModule ();
+        ~FontSupportModule ();
 
     public:
         static void Destroy ();
-        static TTF_Module* Get ();
+        static FontSupportModule* Get ();
         static void Init (SDL_Renderer* renderer);
         static bool IsReady ();
         static bool IsValid ();
