@@ -21,7 +21,10 @@ FontSupportModule::FontSupportModule ()
     }
     else
     {
+        log_i ("TrueType library initialized.");
+
         fonts = new Pool<SDLFont> ();
+        log_i ("Font pool created.")
 
         String defaultFontPath = FSHelpers::MakePath ({
             DEFAULT_FONTS_PATH,
@@ -34,6 +37,8 @@ FontSupportModule::FontSupportModule ()
         }
         else
         {
+            log_i ("Default font loaded.");
+
             defaultFont = fonts->Get("default").Font();
             ready = true;
         }
@@ -51,7 +56,7 @@ FontSupportModule::~FontSupportModule ()
 
 
 void FontSupportModule::Init (SDL_Renderer* renderer)
-{    
+{
     if ((instance == nullptr) && (renderer != nullptr))
     {
         instance = new FontSupportModule ();
@@ -125,7 +130,7 @@ bool FontSupportModule::LoadFont (const char* name,
     fonts->Store (name, font);
     return true;
 }
-        
+
 
 
 SDL_Texture* FontSupportModule::RenderText (const char* text)
@@ -159,3 +164,4 @@ void FontSupportModule::SetFontsPath (const char* path)
 {
     fontsPath = (char*) path;
 }
+
