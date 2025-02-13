@@ -10,6 +10,8 @@ ROOT="${SCRIPT_DIR}"
 LIBS=("SystemHelpers/SystemHelpers.cpp")
 LIBS+=("StringHelpers/StringHelpers.cpp")
 LIBS+=("FilesystemHelpers/FilesystemHelpers.cpp")
+LIBS+=("ANSI/ANSI.cpp")
+LIBS+=("Logging/Logging.cpp")
 
 
 OBJS="${ROOT}/obj"

@@ -12,6 +12,10 @@ LIBS=("FilesystemHelpers/FilesystemHelpers.hpp" \
       "StringHelpers/StringHelpers.cpp" \
       "SystemHelpers/SystemHelpers.hpp" \
       "SystemHelpers/SystemHelpers.cpp" \
+      "Logging/Logging.hpp" \
+      "Logging/Logging.cpp" \
+      "ANSI/ANSI.hpp" \
+      "ANSI/ANSI.cpp" \
       "VectorHelpers.hpp" \
       "LangHelpers.hpp" \
       "Types.hpp")
